@@ -19,12 +19,20 @@ const AddExperienceForm = ({ onAddExperience }) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData),
     })
-      .then((res) => res.json())
-      .then((newExperience) => {
-        onAddExperience(newExperience);
-        setFormData({ person: '', company: 'Capgemini', description: '' });
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('Failed to add experience');
+        }
+        return res.json();
       })
-      .catch((err) => console.error('Error adding experience:', err));
+      .then((newExperience) => {
+        alert('Experience added successfully!');
+        window.location.reload(); // Reload the page after success
+      })
+      .catch((err) => {
+        console.error('Error adding experience:', err);
+        alert('An error occurred while adding the experience.');
+      });
   };
 
   return (
@@ -67,4 +75,3 @@ const AddExperienceForm = ({ onAddExperience }) => {
 };
 
 export default AddExperienceForm;
-
