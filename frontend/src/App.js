@@ -5,11 +5,13 @@ import ExperienceList from './components/ExperienceList';
 import AddExperienceForm from './components/AddExperienceForm';
 import Footer from './components/Footer';
 
+
 const apiBaseUrl = process.env.REACT_APP_BASE_URL;
 
 const App = () => {
   const [accentureExperiences, setAccentureExperiences] = useState([]);
   const [capgeminiExperiences, setCapgeminiExperiences] = useState([]);
+  const [gyanDataExperiences, setGyanDataExperiences] = useState([]);
 
   useEffect(() => {
     fetch(`${apiBaseUrl}/api/experiences`)
@@ -17,8 +19,10 @@ const App = () => {
       .then((data) => {
         const accenture = data.filter((exp) => exp.company.toLowerCase() === 'accenture');
         const capgemini = data.filter((exp) => exp.company.toLowerCase() === 'capgemini');
+        const gyanData = data.filter((exp) => exp.company.toLowerCase() === 'gyandata');
         setAccentureExperiences(accenture);
         setCapgeminiExperiences(capgemini);
+        setGyanDataExperiences(gyanData);
       })
       .catch((err) => console.error('Error fetching experiences:', err));
   }, []);
@@ -30,6 +34,7 @@ const App = () => {
         <ExperienceList
           accentureExperiences={accentureExperiences}
           capgeminiExperiences={capgeminiExperiences}
+          gyanDataExperiences={gyanDataExperiences}
         />
         <AddExperienceForm
           onAddExperience={(newExperience) => {
@@ -38,6 +43,9 @@ const App = () => {
               setAccentureExperiences((prev) => [...prev, newExperience]);
             } else if (company === 'capgemini') {
               setCapgeminiExperiences((prev) => [...prev, newExperience]);
+            }
+            else if (company === 'gyandata') {
+              setGyanDataExperiences((prev) => [...prev, newExperience]);
             }
           }}
         />

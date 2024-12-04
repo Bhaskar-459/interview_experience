@@ -58,6 +58,7 @@ const AddExperienceForm = ({ onAddExperience }) => {
         >
           <option value="Capgemini">Capgemini</option>
           <option value="Accenture">Accenture</option>
+          <option value="GyanData">Gyan Data</option>
         </select>
       </div>
       <div>
